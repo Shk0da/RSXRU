@@ -25,7 +25,7 @@ class Application {
 
     private val trendStock = "SBMX"
     private val stockPortfolioMaxSize = 5
-    private val bonds = arrayOf("SBGB")
+    private val bonds = arrayOf("FXMM", "SBGB")
 
     private val marketService = MarketService()
     private val candleService = CandleService()
