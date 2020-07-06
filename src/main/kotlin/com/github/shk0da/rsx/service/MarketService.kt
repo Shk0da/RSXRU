@@ -9,7 +9,6 @@ import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
-import java.text.SimpleDateFormat
 import java.time.Duration.of
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -45,7 +44,8 @@ class MarketService {
 
     fun getLastClosePrice(symbol: String): Double {
         sleep((1..5).random().toLong() * 1000)
-        var url = "http://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities/$symbol.csv?iss.meta=off&iss.only=securities&securities.columns=PREVPRICE"
+        var url =
+            "http://iss.moex.com/iss/engines/stock/markets/shares/boards/tqbr/securities/$symbol.csv?iss.meta=off&iss.only=securities&securities.columns=PREVPRICE"
         var historyRequest = HttpRequest.newBuilder()
             .uri(URI.create(url))
             .timeout(of(10, ChronoUnit.SECONDS))
@@ -54,8 +54,10 @@ class MarketService {
         var response = httpClient.send(historyRequest, HttpResponse.BodyHandlers.ofString())
 
         // try ETFs
-        if (response.body().lines().stream().skip(2).map { it.trim() }.filter { !it.trim().isBlank() }.findFirst().isEmpty) {
-            url = "http://iss.moex.com/iss/engines/stock/markets/shares/boards/tqtf/securities/$symbol.csv?iss.meta=off&iss.only=securities&securities.columns=PREVPRICE"
+        if (response.body().lines().stream().skip(2).map { it.trim() }.filter { !it.trim().isBlank() }
+                .findFirst().isEmpty) {
+            url =
+                "http://iss.moex.com/iss/engines/stock/markets/shares/boards/tqtf/securities/$symbol.csv?iss.meta=off&iss.only=securities&securities.columns=PREVPRICE"
             historyRequest = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .timeout(of(10, ChronoUnit.SECONDS))
