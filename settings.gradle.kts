@@ -1,2 +1,1 @@
-rootProject.name = "RSX"
-
+rootProject.name = "RSXRU"
